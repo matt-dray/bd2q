@@ -7,6 +7,8 @@
 
 Helpers for porting [a {blogdown} blog](https://pkgs.rstudio.com/blogdown/) to [a Quarto blog](https://quarto.org/docs/websites/website-blog.html). 'bd2q' = '{blogdown} to Quarto'.
 
-I built this package to help convert my live {blogdown} blog at [matt-dray/rostrum-blog](https://github.com/matt-dray/rostrum-blog) to a Quarto version at [matt-dray/rostrum-blog-2](https://github.com/matt-dray/rostrum-blog-2). 
+Very much a work in progress.
+
+Ther aim is to help convert my live {blogdown} blog at [matt-dray/rostrum-blog](https://github.com/matt-dray/rostrum-blog) to a Quarto version at [matt-dray/rostrum-blog-2](https://github.com/matt-dray/rostrum-blog-2). 
 
 Your mileage may vary. 
