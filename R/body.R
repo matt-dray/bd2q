@@ -1,7 +1,4 @@
-#
-#
-# # Adjust old resource paths -----------------------------------------------
-#
+# # Adjust old resource paths
 #
 # qmds_to_fix <- dir_ls(path(new_dir, "posts"), recurse = TRUE, regexp = ".qmd$")
 #

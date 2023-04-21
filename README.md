@@ -9,6 +9,6 @@ Helpers for porting [a {blogdown} blog](https://pkgs.rstudio.com/blogdown/) to [
 
 Very much a work in progress.
 
-Ther aim is to help convert my live {blogdown} blog at [matt-dray/rostrum-blog](https://github.com/matt-dray/rostrum-blog) to a Quarto version at [matt-dray/rostrum-blog-2](https://github.com/matt-dray/rostrum-blog-2). 
+The aim is to help convert my live {blogdown} blog at [matt-dray/rostrum-blog](https://github.com/matt-dray/rostrum-blog) to a Quarto version at [matt-dray/rostrum-blog-2](https://github.com/matt-dray/rostrum-blog-2). 
 
 Your mileage may vary. 
