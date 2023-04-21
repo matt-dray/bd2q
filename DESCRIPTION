@@ -1,0 +1,18 @@
+Package: bd2q
+Title: Convert a 'blogdown' Blog to Quarto
+Version: 0.0.0.9000
+Authors@R: 
+    person("Matt", "Dray", , "mwdray@gmail.com", role = c("aut", "cre"))
+Description: Takes the folder stucture and files of an old 'blogdown' blog and 
+    translates them to what's needed for a Quarto blog. Built for my own
+    personal blog, so your mileage may vary.
+URL: https://github.com/matt-dray/bd2q
+BugReports: https://github.com/matt-dray/bd2q/issues
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    fs,
+    purrr,
+    stringr
