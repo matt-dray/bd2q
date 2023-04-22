@@ -39,6 +39,8 @@ update_resource_paths <- function(
     fs::path("posts") |>
     fs::dir_ls(recurse = TRUE, regexp = ".qmd$")
 
+  cli::cli_alert_info("Updating posts.")
+
   purrr::walk(
     qmds_to_fix,
     function(file) {
@@ -56,11 +58,13 @@ update_resource_paths <- function(
 
       for (i in seq_along(lines_replacement)) {
         qmd_lines[as.numeric(names(lines_replacement[i]))] <- lines_replacement[i]
+        readr::write_lines(qmd_lines, file)
+        cli::cli_alert_success("Updated {file}.")
       }
-
-      readr::write_lines(qmd_lines, file)
 
     }
   )
+
+  # cli::cli_alert_success("{length(qmds_to_fix)} posts updated.")
 
 }

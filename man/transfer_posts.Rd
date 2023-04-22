@@ -4,12 +4,15 @@
 \alias{transfer_posts}
 \title{Build Quarto Directory Structure and Add Posts}
 \usage{
-transfer_posts(bd_path, q_path)
+transfer_posts(bd_path, q_path, ...)
 }
 \arguments{
 \item{bd_path}{Character. Path to directory containing the 'blogdown' blog.}
 
 \item{q_path}{Character. Path to directory containing the Quarto blog.}
+
+\item{...}{Passed to \link[fs:copy]{fs::file_copy}, with the intention that you can supply
+\code{overwrite = TRUE} if you need to overwrite any existing files.}
 }
 \value{
 Nothing. New directory structure and files are created at the path
@@ -30,7 +33,8 @@ resources, which can be generated using \link{transfer_resources}.)
 \dontrun{
 transfer_posts(
     bd_path = "~/Documents/matt-dray/rostrum-blog",
-    q_path  = "~/Documents/matt-dray/rostrum-blog-2"
+    q_path  = "~/Documents/matt-dray/rostrum-blog-2",
+    overwrite = TRUE
 )
 }
 }
