@@ -2,7 +2,7 @@
 % Please edit documentation in R/posts.R
 \name{transfer_posts}
 \alias{transfer_posts}
-\title{Build Directory Structure and Add Posts}
+\title{Build Quarto Directory Structure and Add Posts}
 \usage{
 transfer_posts(bd_path, q_path)
 }
@@ -20,11 +20,11 @@ Convert the directory structure for existing 'blogdown' posts to that needed
 for a newly-created Quarto blog.
 }
 \details{
-Rmd posts in the 'blogdown' blog are at the path
+Assumes that Rmd posts in the 'blogdown' blog are at the path
 /content/post/YYYY-MM-DD-post-name.Rmd. For Quarto, the path must be
 /posts/YYYY-MM-DD-post-name/ and the file containing each post must be
-named 'index.qmd'. This directory will also hold a folder of associated
-resources, which can be generated using \link{transfer_resources}.
+named 'index.qmd'. (This directory will also hold a folder of associated
+resources, which can be generated using \link{transfer_resources}.)
 }
 \examples{
 \dontrun{

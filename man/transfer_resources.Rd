@@ -36,10 +36,10 @@ blog to that required by Quarto. Assumes you've already set up the directory
 structure for each post using \link{transfer_posts}.
 }
 \details{
-Resources for each post in the 'blogdown' blog are at the path
-/static/post/YYYY-MM-DD-post-name_files/. For Quarto, the folder of
-resources for each post lives under the appropriate
-/posts/YYYY-MM-DD-post-name/ path alongside it's associated index.qmd.
+Assumes that the resources for a 'blogdown' post are at the path
+/static/post/YYYY-MM-DD-post-name_files/, while for Quarto there's a
+subdirectory for resources (defaults to 'resources/) in
+/posts/YYYY-MM-DD-post-name/ alongside that post's index.qmd file.
 }
 \examples{
 \dontrun{

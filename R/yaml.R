@@ -6,25 +6,20 @@
 #'
 #' @param q_path Character. Path to directory containing the Quarto blog.
 #'
-#' @return Nothing. Quarto files are overwritten if they contained a draft
-#'     status in their YAML header.
-#'
 #' @details A qmd with 'demo: no' in the YAML will render, but will be skipped
 #'     when it comes to the site's index.qmd being rendered; these posts simply
 #'     won't appear on the homepage. We can read in the qmd, remove the line
 #'     with 'draft:' if it exists, and resave it.
 #'
+#' @return Nothing. Quarto files are overwritten if they contained a draft
+#'     status in their YAML header.
+#'
 #' @export
 #'
-#' @examples \dontrun{function("~/Documents/matt-dray/rostrum-blog-2")}
+#' @examples \dontrun{delete_draft_line("~/Documents/matt-dray/rostrum-blog-2")}
 delete_draft_line <- function(q_path) {
 
-  if (!fs::dir_exists(q_path)) {
-    stop(
-      paste("The Quarto blog directory", q_path, "doesn't exist."),
-      call. = FALSE
-    )
-  }
+  .check_q_path(q_path)
 
   # Paths to all old Rmd files
   q_qmds <- fs::path(q_path, "posts") |>

@@ -24,5 +24,5 @@ won't appear on the homepage. We can read in the qmd, remove the line
 with 'draft:' if it exists, and resave it.
 }
 \examples{
-\dontrun{function("~/Documents/matt-dray/rostrum-blog-2")}
+\dontrun{delete_draft_line("~/Documents/matt-dray/rostrum-blog-2")}
 }

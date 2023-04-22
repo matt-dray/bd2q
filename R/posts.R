@@ -1,4 +1,4 @@
-#' Build Directory Structure and Add Posts
+#' Build Quarto Directory Structure and Add Posts
 #'
 #' Convert the directory structure for existing 'blogdown' posts to that needed
 #' for a newly-created Quarto blog.
@@ -6,11 +6,11 @@
 #' @param bd_path Character. Path to directory containing the 'blogdown' blog.
 #' @param q_path Character. Path to directory containing the Quarto blog.
 #'
-#' @details Rmd posts in the 'blogdown' blog are at the path
+#' @details Assumes that Rmd posts in the 'blogdown' blog are at the path
 #'    /content/post/YYYY-MM-DD-post-name.Rmd. For Quarto, the path must be
 #'    /posts/YYYY-MM-DD-post-name/ and the file containing each post must be
-#'    named 'index.qmd'. This directory will also hold a folder of associated
-#'    resources, which can be generated using [transfer_resources].
+#'    named 'index.qmd'. (This directory will also hold a folder of associated
+#'    resources, which can be generated using [transfer_resources].)
 #'
 #' @return Nothing. New directory structure and files are created at the path
 #'     given by q_path.
@@ -26,7 +26,8 @@
 #' }
 transfer_posts <- function(bd_path, q_path) {
 
-  .check_paths(bd_path, q_path)
+  .check_bd_path(bd_path)
+  .check_q_path(q_path)
 
   # Paths to all old Rmd files
   bd_rmds <- fs::path(bd_path, "content/post") |>
@@ -66,10 +67,10 @@ transfer_posts <- function(bd_path, q_path) {
 #' @param ... Passed to [fs::file_copy], with the intention that you can supply
 #'     `overwrite = TRUE` if you need to overwrite any existing files.
 #'
-#' @details Resources for each post in the 'blogdown' blog are at the path
-#'    /static/post/YYYY-MM-DD-post-name_files/. For Quarto, the folder of
-#'    resources for each post lives under the appropriate
-#'    /posts/YYYY-MM-DD-post-name/ path alongside it's associated index.qmd.
+#' @details Assumes that the resources for a 'blogdown' post are at the path
+#'    /static/post/YYYY-MM-DD-post-name_files/, while for Quarto there's a
+#'    subdirectory for resources (defaults to 'resources/) in
+#'    /posts/YYYY-MM-DD-post-name/ alongside that post's index.qmd file.
 #'
 #' @return Nothing. New directory structure and files are created at the path
 #'     given by q_path, in the subdirectory given by resources_dir.
@@ -94,7 +95,8 @@ transfer_resources <- function(
     ...
 ) {
 
-  .check_paths(bd_path, q_path)
+  .check_bd_path(bd_path)
+  .check_q_path(q_path)
 
   # Paths to folder of each blogdown post's resources
   bd_resources <- bd_path |>

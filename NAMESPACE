@@ -3,3 +3,4 @@
 export(delete_draft_line)
 export(transfer_posts)
 export(transfer_resources)
+export(update_resource_paths)
