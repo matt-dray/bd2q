@@ -6,12 +6,11 @@
   dir_exists <- fs::dir_exists(bd_path)
 
   if (!dir_exists) {
-    stop(
+    cli::cli_abort(
       paste(
-        "The directory", bd_path, "doesn't exist.",
+        "The directory {.file {bd_path}} doesn't exist.",
         "You must provide a path to the source for an existing 'blogdown' blog."
-      ),
-      call. = FALSE
+      )
     )
   }
 
@@ -20,13 +19,12 @@
     all()
 
   if (!hallmarks_exist) {
-    warning(
-      paste0(
-        "The directory ", bd_path,
-        " doesn't look like the source for a 'blogdown' blog. ",
-        "It doesn't contain one of these files: ", toString(bd_hallmarks), "."
-      ),
-      call. = FALSE
+    cli::cli_warn(
+      paste(
+        "The directory {bd_path} doesn't look like it contains the source for",
+        "a 'blogdown' blog. It doesn't contain one of these typical files:",
+        "{toString(bd_hallmarks)}."
+      )
     )
   }
 
@@ -40,13 +38,11 @@
   dir_exists <- fs::dir_exists(q_path)
 
   if (!dir_exists) {
-    stop(
+    cli::cli_abort(
       paste(
-        "The Quarto blog directory", q_path, "doesn't exist.",
-        "Follow the instructions at",
-        "<https://quarto.org/docs/websites/website-blog.html> for setup."
-      ),
-      call. = FALSE
+        "The directory {q_path} doesn't exist. Follow instructions at",
+        "{.url https://quarto.org/docs/websites/website-blog.html} for setup."
+      )
     )
   }
 
@@ -55,13 +51,11 @@
     all()
 
   if (!hallmarks_exist) {
-    warning(
-      paste0(
-        "The directory ", q_path,
-        " doesn't look like the source for a Quarto blog. ",
-        "It doesn't contain one of these files: ", toString(q_hallmarks), "."
-      ),
-      call. = FALSE
+    cli::cli_warn(
+      paste(
+        "The directory {q_path} doesn't look like the source for a Quarto blog.",
+        "It doesn't contain one of these files: {toString(q_hallmarks)}."
+      )
     )
   }
 

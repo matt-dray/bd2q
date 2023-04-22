@@ -25,7 +25,12 @@ delete_draft_line <- function(q_path) {
   q_qmds <- fs::path(q_path, "posts") |>
     fs::dir_ls(regexp = "index.qmd$", recurse = TRUE)
 
+  cli::cli_alert_info("Making corrections.")
+
   # Read the qmd, remove lines starting 'draft:', overwrite original
+
+  count_posts <- 0
+
   purrr::walk(
     q_qmds,
     function(post) {
@@ -35,10 +40,15 @@ delete_draft_line <- function(q_path) {
 
       if (length(line_to_remove) > 0) {
         post_lines_updated <- post_lines[-line_to_remove]
-        readr::write_lines(post)
+        readr::write_lines(post_lines_updated, post)
+        count_posts <<- count_posts + 1
       }
 
     }
+  )
+
+  cli::cli_alert_success(
+    "{length(q_qmds)} posts inspected, {count_posts} corrected."
   )
 
 }
