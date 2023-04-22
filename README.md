@@ -23,9 +23,10 @@ Two things are in scope for now: organising the directory structure for posts an
 
 This includes functions that:
 
-* set up the new posts directory and fill with posts (converted from Rmd to qmd)
-* retrieve resources (images, etc) and put them in a 'resources' sudirectory in each post's directory
+* create a directory containing a Quarto blog template (like in [the quickstart guidance](https://quarto.org/docs/websites/website-blog.html))
+* set up a new posts/ directory and fill with posts (converted from Rmd to qmd)
+* retrieve resources (images, etc) and put them in a 'resources' subdirectory in each post's directory
 * adjust YAML content of each post (e.g. remove 'draft' lines, consolidate categories/tags, etc)
-* adjust inline code (e.g. my 'update' divs can become Quarto callouts, sessioninfo details blocaks can be removed and added to appendix, etc)
+* adjust inline code (e.g. my 'update' divs can become Quarto callouts, session info details blocks can be removed and added to appendix, etc)
 
 I'll still have to go through certain posts manually to correct for out-of-date packages and things like linkrot.
