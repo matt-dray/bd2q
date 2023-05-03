@@ -15,18 +15,22 @@ The aim is to help convert my live {blogdown} blog, [rostrum.blog](https://ww.ro
 
 The original source code is at [matt-dray/rostrum-blog](https://github.com/matt-dray/rostrum-blog) and the Quarto version will be at [matt-dray/rostrum-blog-2](https://github.com/matt-dray/rostrum-blog-2). 
 
-The package is for my own use, but should be pretty generalisable to other {blogdown}-to-Quarto transitions. Your mileage may vary.
+The package is for my own use, but might be useful to other {blogdown}-to-Quarto transitions. Your mileage may vary.
 
 # Scope
 
-Two things are in scope for now: organising the directory structure for posts and amending the content of the qmd file for each post.
+Three things are in scope for now: to create a Quarto-blog template repository; to organise the directory structure for posts and copy them over; to amend the content of the index.qmd file for each post.
 
-This includes functions that:
+To transfer from {blogdown} to Quarto:
 
-* create a directory containing a Quarto blog template (like in [the quickstart guidance](https://quarto.org/docs/websites/website-blog.html))
-* set up a new posts/ directory and fill with posts (converted from Rmd to qmd)
-* retrieve resources (images, etc) and put them in a 'resources' subdirectory in each post's directory
-* adjust YAML content of each post (e.g. remove 'draft' lines, consolidate categories/tags, etc)
-* adjust inline code (e.g. my 'update' divs can become Quarto callouts, session info details blocks can be removed and added to appendix, etc)
+* `create_template()` to generate a Quarto blog template
+* `transfer_posts()` to copy across posts from a {blogdown} blog with the correct structure
+* `transfer_resources()` to copy across resources from a {blogdown} blog with the correct structure
+* `create_and_transfer()` to run the above three functions in one go
 
-I'll still have to go through certain posts manually to correct for out-of-date packages and things like linkrot.
+To adjust the index.qmd file for each post:
+
+* `update_resource_paths()` to correct resource file paths in each post
+* `remove_line()` to delete a single line from a post based on a regular expression
+
+Plenty of stuff is out of scope, like generating CSS styles, amending Quarto meta files, addressing linkrot, etc. The intent of the package is to automate the easier stuff. You'll probably have to do a lot of manual adjustment once you try to re-render the entire blog from scratch. Good luck to all of us.
