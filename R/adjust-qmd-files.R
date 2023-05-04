@@ -77,8 +77,7 @@ update_resource_paths <- function(
 #' @param detect_rx Character. A regular expression that captures text within a
 #'     line that you want to delete from each post's index.qmd file.
 #'
-#' @return Nothing. Quarto files are overwritten if they contained a draft
-#'     status in their YAML header.
+#' @return Nothing. Quarto files are overwritten if they contain matching lines.
 #'
 #' @export
 #'
@@ -92,6 +91,15 @@ update_resource_paths <- function(
 remove_line <- function(q_path, detect_rx) {
 
   .check_q_path(q_path)
+
+  if (!is.character(detect_rx) | length(detect_rx) > 1) {
+    cli::cli_abort(
+      c(
+        "You must supply a single regular expression string to detect_rx.",
+        "i" = "You supplied an object of type '{typeof(detect_rx)}'."
+      )
+    )
+  }
 
   # Paths to all qmd files
   q_qmds <- fs::path(q_path, "posts") |>
@@ -122,6 +130,80 @@ remove_line <- function(q_path, detect_rx) {
   cli::cli_alert_success(
     paste(
       "Removed lines matching the regular expression '{detect_rx}' from",
+      "{count_posts} out of {length(q_qmds)} posts."
+    )
+  )
+
+}
+
+#' Remove Lines from a Quarto Post
+#'
+#' Search each Quarto blog post's index.qmd file for consecutive lines that
+#' contain a supplied set of strings, delete them and overwrite the original
+#' file.
+#'
+#' @param q_path Character. Path to directory containing the Quarto blog.
+#' @param detect_strs Character. A vector of strings that matches text within a
+#'     line that you want to delete from each post's index.qmd file.
+#'
+#' @return Nothing. Quarto files are overwritten if they contain matching lines.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' remove_lines(
+#'   q_path = "~/Documents/new-quarto-project/",
+#'   detect_strs = c(  # remove bespoke session info block
+#'     "---",
+#'     "```{r}",
+#'     "sessionInfo()",
+#'     "```"
+#'   )
+#' )
+#' }
+remove_lines <- function(q_path, detect_strs) {
+
+  .check_q_path(q_path)
+
+  if (!is.character(detect_strs)) {
+    cli::cli_abort(
+      c(
+        "You must supply a character vector to detect_strs.",
+        "i" = "You supplied an object of type '{typeof(detect_strs)}'."
+      )
+    )
+  }
+
+  # Paths to all qmd files
+  q_qmds <- fs::path(q_path, "posts") |>
+    fs::dir_ls(regexp = "index.qmd$", recurse = TRUE)
+
+  cli::cli_alert_info("Making corrections.")
+
+  # Read the qmd, remove specified lines, overwrite original
+
+  count_posts <- 0
+
+  purrr::walk(
+    q_qmds,
+    function(post) {
+
+      post_lines <- readr::read_lines(post)
+      lines_to_remove <- which(post_lines %in% detect_strs)
+
+      if (length(lines_to_remove) > 0) {
+        post_lines_updated <- post_lines[-lines_to_remove]
+        readr::write_lines(post_lines_updated, post)
+        count_posts <<- count_posts + 1
+      }
+
+    }
+  )
+
+  cli::cli_alert_success(
+    paste(
+      "Removed lines matching the provided string vector from",
       "{count_posts} out of {length(q_qmds)} posts."
     )
   )

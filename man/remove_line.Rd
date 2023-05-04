@@ -13,8 +13,7 @@ remove_line(q_path, detect_rx)
 line that you want to delete from each post's index.qmd file.}
 }
 \value{
-Nothing. Quarto files are overwritten if they contained a draft
-status in their YAML header.
+Nothing. Quarto files are overwritten if they contain matching lines.
 }
 \description{
 Search each Quarto blog post's index.qmd file for lines that contain a

@@ -31,6 +31,7 @@ To transfer from {blogdown} to Quarto:
 To adjust the index.qmd file for each post:
 
 * `update_resource_paths()` to correct resource file paths in each post
-* `remove_line()` to delete a single line from a post based on a regular expression
+* `remove_line()` to delete a single line from a post based on a provided regular expression
+* `remove_lines()` to delete a set of consecutive lines from a post matched to a provided character vector
 
 Plenty of stuff is out of scope, like generating CSS styles, amending Quarto meta files, addressing linkrot, etc. The intent of the package is to automate the easier stuff. You'll probably have to do a lot of manual adjustment once you try to re-render the entire blog from scratch. Good luck to all of us.
