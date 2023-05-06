@@ -136,48 +136,57 @@ remove_line <- function(q_path, detect_rx) {
 
 }
 
-#' Remove Lines from a Quarto Post
-#'
-#' Search each Quarto blog post's index.qmd file for consecutive lines that
-#' contain a supplied set of strings, delete them and overwrite the original
-#' file.
+#' Replace or Remove Lines from a Post
 #'
 #' @param q_path Character. Path to directory containing the Quarto blog.
-#' @param detect_strs Character. A vector of strings that matches text within a
-#'     line that you want to delete from each post's index.qmd file.
+#' @param match_str Character. A vector of consecutive lines in a post that you
+#'     want to match, so they can be replaced or removed. This is based on exact
+#'     matching, not a regular expression.
+#' @param replacement_str Character. The consecutive lines that you want to
+#'     insert to replace the vector provided by 'match_str'. Specify `NULL`
+#'     (default) if you want to remove match_str' without replacement.
+#' @param collapse_str Character. The function works by collapsing a post's
+#'     lines to a single string, with elements separated by some unique string.
 #'
 #' @return Nothing. Quarto files are overwritten if they contain matching lines.
 #'
 #' @export
 #'
-#' @examples
-#' \dontrun{
-#' remove_lines(
+#' @examples \dontrun{
+#' replace_lines(
 #'   q_path = "~/Documents/new-quarto-project/",
-#'   detect_strs = c(  # remove bespoke session info block
-#'     "---",
-#'     "```{r}",
-#'     "sessionInfo()",
-#'     "```"
-#'   )
+#'   match_str = c("This is an example", "These are consecutive lines to match"),
+#'   replacement_str = c("Replace with this line", "And this one"),
+#'   collapse_str = "||||"
 #' )
 #' }
-remove_lines <- function(q_path, detect_strs) {
+replace_lines <- function(
+    q_path = "/Users/mattdray/Desktop/test",
+    match_str = c(
+      "---",
+      "<details><summary>Session info</summary>",
+      "```{r eval=TRUE, sessioninfo, echo=FALSE}",
+      "sessioninfo::session_info()",
+      "```",
+      "</details>",
+      ""
+    ),
+    replacement_str = "hello!",
+    collapse_str = "///"
+) {
 
   .check_q_path(q_path)
-
-  if (!is.character(detect_strs)) {
-    cli::cli_abort(
-      c(
-        "You must supply a character vector to detect_strs.",
-        "i" = "You supplied an object of type '{typeof(detect_strs)}'."
-      )
-    )
-  }
+  .check_arg_char(match_str)
+  .check_arg_char(collapse_str)
 
   # Paths to all qmd files
   q_qmds <- fs::path(q_path, "posts") |>
     fs::dir_ls(regexp = "index.qmd$", recurse = TRUE)
+
+  match_collapse <- paste(match_str, collapse = collapse_str)
+  match_collapse_rx <-
+    stringr::str_replace_all(match_collapse, "(\\W)", "\\\\\\1")
+  replacement_collapse <- paste(replacement_str, collapse = collapse_str)
 
   cli::cli_alert_info("Making corrections.")
 
@@ -190,11 +199,25 @@ remove_lines <- function(q_path, detect_strs) {
     function(post) {
 
       post_lines <- readr::read_lines(post)
-      lines_to_remove <- which(post_lines %in% detect_strs)
+      post_collapse <- paste(post_lines, collapse = collapse_str)
 
-      if (length(lines_to_remove) > 0) {
-        post_lines_updated <- post_lines[-lines_to_remove]
-        readr::write_lines(post_lines_updated, post)
+      if (!is.null(replacement_str)) {
+        post_collapse_updated <- post_collapse |>
+          stringr::str_replace_all(
+            pattern = paste0(match_collapse_rx, collapse_str),
+            replacement = paste0(replacement_collapse, collapse_str)
+          )
+      }
+
+      if (is.null(replacement_str)) {
+        post_collapse_updated <- post_collapse |>
+          stringr::str_remove(paste0(match_collapse_rx, collapse_str))
+      }
+
+      lines_updated <- stringr::str_split_1(post_collapse_updated, collapse_str)
+
+      if (post_collapse != post_collapse_updated) {
+        readr::write_lines(lines_updated, post)
         count_posts <<- count_posts + 1
       }
 

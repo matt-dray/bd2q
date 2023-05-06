@@ -26,12 +26,12 @@ To transfer from {blogdown} to Quarto:
 * `create_template()` to generate a Quarto blog template
 * `transfer_posts()` to copy across posts from a {blogdown} blog with the correct structure
 * `transfer_resources()` to copy across resources from a {blogdown} blog with the correct structure
-* `create_and_transfer()` to run the above three functions in one go
+* `create_and_transfer()` a convenience function that runs the above three functions in one go (used mostly by me for testing)
 
 To adjust the index.qmd file for each post:
 
 * `update_resource_paths()` to correct resource file paths in each post
 * `remove_line()` to delete a single line from a post based on a provided regular expression
-* `remove_lines()` to delete a set of consecutive lines from a post matched to a provided character vector
+* `replace_lines()` to either remove a set of consecutive lines from a post matched to a provided character vector, or replace with a provided vector of consecutive lines.
 
 Plenty of stuff is out of scope, like generating CSS styles, amending Quarto meta files, addressing linkrot, etc. The intent of the package is to automate the easier stuff. You'll probably have to do a lot of manual adjustment once you try to re-render the entire blog from scratch. Good luck to all of us.

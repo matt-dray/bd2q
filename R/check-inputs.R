@@ -60,3 +60,23 @@
   }
 
 }
+
+.check_arg_char <- function(content, allow_null = FALSE) {
+
+  # Capture name of object passed to content (to be used in the abort message)
+  arg_name <- as.list(match.call()[-1])[["content"]]
+
+  abort_msg <- c(
+    "You must supply a character vector to the argument '{arg_name}'.",
+    "i" = "You supplied an object of type '{typeof(content)}'."
+  )
+
+  if (!allow_null & !is.character(content)) {
+      cli::cli_abort(abort_msg)
+  }
+
+  if (allow_null & !(is.character(content) | is.null(content))) {
+    cli::cli_abort(abort_msg)
+  }
+
+}

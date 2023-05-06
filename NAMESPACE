@@ -3,7 +3,7 @@
 export(create_and_transfer)
 export(create_template)
 export(remove_line)
-export(remove_lines)
+export(replace_lines)
 export(transfer_posts)
 export(transfer_resources)
 export(update_resource_paths)
