@@ -4,25 +4,18 @@
 \alias{replace_lines}
 \title{Replace or Remove Lines from a Post}
 \usage{
-replace_lines(
-  q_path = "/Users/mattdray/Desktop/test",
-  match_str = c("---", "<details><summary>Session info</summary>",
-    "```{r eval=TRUE, sessioninfo, echo=FALSE}", "sessioninfo::session_info()", "```",
-    "</details>", ""),
-  replacement_str = "hello!",
-  collapse_str = "///"
-)
+replace_lines(q_path, match_str, replacement_str, collapse_str = "///")
 }
 \arguments{
 \item{q_path}{Character. Path to directory containing the Quarto blog.}
 
-\item{match_str}{Character. A vector of consecutive lines in a post that you
-want to match, so they can be replaced or removed. This is based on exact
-matching, not a regular expression.}
+\item{match_str}{Character. A vector of strings that match exactly to
+consecutive lines in a blog post that you want to replace (with
+'replacement_str') or remove (when 'replacement_str' is \code{NULL}).}
 
-\item{replacement_str}{Character. The consecutive lines that you want to
-insert to replace the vector provided by 'match_str'. Specify \code{NULL}
-(default) if you want to remove match_str' without replacement.}
+\item{replacement_str}{Character. A vector of consecutive strings to replace
+the strings proviede in 'match_str'. Specify \code{NULL} (default) if you want
+to remove 'match_str' without replacement.}
 
 \item{collapse_str}{Character. The function works by collapsing a post's
 lines to a single string, with elements separated by some unique string.}
@@ -38,8 +31,7 @@ Replace or Remove Lines from a Post
 replace_lines(
   q_path = "~/Documents/new-quarto-project/",
   match_str = c("This is an example", "These are consecutive lines to match"),
-  replacement_str = c("Replace with this line", "And this one"),
-  collapse_str = "||||"
+  replacement_str = c("Replace with this line", "And this one")
 )
 }
 }
